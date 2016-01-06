@@ -1,0 +1,36 @@
+{
+    "name": "mduplouy/acmewebmanager",
+    "version": "0.1",
+    "description": "ACME X509 Certificate Web Manager",
+    "keywords": [
+      "ACME", "CA", "JWS", "Manager"
+    ],
+    "homepage": "https://github.com/mduplouy/acme-web-manager",
+    "license": "LGPLv2+",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Mathieu Duplouy",
+            "email": "mathieu.duplouy@gmail.com",
+            "homepage": "https://github.com/mduplouy"
+        }
+    ],
+    "require": {
+        "octopuce/acmephpc": "dev-refactoring as v1.0",
+        "silex/silex" : "v1.3.4"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/mduplouy/acmephpc"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "4.8.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Octopuce\\Acme\\": "app/src/AcmeWebManager/"
+        }
+    }
+}
