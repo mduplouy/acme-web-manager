@@ -16,10 +16,18 @@
         }
     ],
     "require": {
-        "octopuce/acmephpc": "dev-refactoring as v1.0",
-        "silex/silex" : "v1.3.4"
+        "silex/silex" : "~2.0",
+        "twig/twig": ">=1.8,<2.0-dev",
+        "symfony/twig-bridge": "~3.1",
+        "monolog/monolog": "^1.21",
+        "solocreation/acme-php-service-provider": "dev-pimple-3.x",
+        "octopuce/acmephpc": "dev-pimple-3.x as v1.0"
     },
     "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/solocreation/AcmePhpServiceProvider"
+        },
         {
             "type": "vcs",
             "url": "https://github.com/mduplouy/acmephpc"
@@ -30,7 +38,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Octopuce\\Acme\\": "app/src/AcmeWebManager/"
+            "AcmeWebManager\\": "src/AcmeWebManager/"
         }
     }
 }

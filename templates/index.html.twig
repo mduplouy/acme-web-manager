@@ -1,0 +1,231 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+
+    <table class="table table-striped table-hover">
+        <thead>
+            <th>Domain name</th>
+            <th>Status</th>
+            <th></th>
+        </thead>
+
+        <tbody>
+        {% for domainName, domain in domains %}
+            <tr>
+                <td>{{ domainName }}</td>
+                <td>{{ domain.getStatus }}</td>
+                <td>
+
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-xs btn-info">Get Challenge Data</a>
+                        <a href="#" class="btn btn-xs btn-info dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path("challenge_data", {"fqdn": domainName, "type": "http"}) }}" class="challenge-info">http-01</a></li>
+                            <li><a href="{{ path("challenge_data", {"fqdn": domainName, "type": "dns"}) }}" class="challenge-info">dns</a></li>
+                            <li><a href="{{ path("challenge_data", {"fqdn": domainName, "type": "tls"}) }}" class="challenge-info">tls</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-xs btn-info">Solve challenge</a>
+                        <a href="#" class="btn btn-xs btn-info dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path("challenge_solve", {"fqdn": domainName, "type": "http"}) }}" class="challenge">http-01</a></li>
+                            <li><a href="{{ path("challenge_solve", {"fqdn": domainName, "type": "dns"}) }}" class="challenge">dns</a></li>
+                            <li><a href="{{ path("challenge_solve", {"fqdn": domainName, "type": "tls"}) }}" class="challenge">tls</a></li>
+                        </ul>
+                    </div>
+
+                    <a href="{{ path("certificate_download", {"fqdn": domainName} ) }}" class="btn btn-xs btn-info">Download certificate</a>
+                    <a href="{{ path("certificate_renew", {"fqdn": domainName} ) }}" class="renew btn btn-xs btn-success">Renew</a>
+                    <a href="{{ path("certificate_revoke", {"fqdn": domainName} ) }}" class="revoke btn btn-xs btn-warning">Revoke</a>
+                    <a href="{{ path("delete", {"fqdn": domainName} ) }}" class="delete btn btn-xs btn-danger">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+
+
+    <form method="post" action="{{ path('add_domain') }}">
+        <div class="form-group col-md-4">
+            <input class="form-control" name="domain" type="text">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create a new domain to manage</button>
+    </form>
+
+    <div id="modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="text-center" style="padding:4em 0;">
+                    <img src="{{ global.request.basepath }}/assets/loader.gif" alt="Loading.." />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="challengeInfo" style="display:none;">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Challenge information</h4>
+        </div>
+        <div class="modal-body">
+            <p></p>
+
+            <div class="form-group">
+              <label class="control-label" for="authKey">Authorization key :</label>
+              <input class="form-control input-sm" id="authKey" type="text">
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+
+    <div id="confirmRenew" style="display:none;">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Renew certificate for ###DOMAIN### ?</h4>
+        </div>
+        <div class="modal-body">
+            <form method="post" action="">
+                <div class="form-group text-center">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No, cancel</button>
+                    <button type="submit" class="btn btn-danger">Yes, renew now</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="confirmRevoke" style="display:none;">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Are you sure to revoke certificate for ###DOMAIN### ?</h4>
+        </div>
+        <div class="modal-body">
+            <form method="post" action="">
+                <div class="form-group text-center">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No, cancel</button>
+                    <button type="submit" class="btn btn-danger">Yes, revoke now</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="confirmDelete" style="display:none;">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Are you sure to delete ###DOMAIN### ?</h4>
+        </div>
+        <div class="modal-body">
+            <form method="post" action="">
+                <div class="form-group text-center">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No, cancel</button>
+                    <button type="submit" class="btn btn-danger">Yes, delete now</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="error" style="display:none;" class="alert alert-dismissible alert-danger">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <p style="margin:4em 0;" class="text-center"></p>
+    </div>
+
+{% endblock %}
+
+{% block beforeBodyEnd %}
+
+    {{ parent() }}
+
+    <script type="text/javascript">
+        jQuery(".challenge-info").on("click", function(e) {
+            e.preventDefault();
+
+            jQuery("#modal").modal();
+
+            jQuery.getJSON(
+                jQuery(this).attr("href"),
+                {},
+                function (data) {
+
+                    jQuery("#authKey").attr("value", data.keyAuthorization);
+                    jQuery("#challengeInfo .modal-body > p")
+                        .html("Put the key in a file reachable at the following url : <pre>" + data.info + "</pre>");
+
+                    var clone = jQuery("#challengeInfo").clone().html().replace(/authKey/g, "NewAuthKey");
+                    jQuery("#modal .modal-content").html(clone);
+                }
+            );
+
+        });
+
+        jQuery(".challenge").on("click", function(e) {
+            e.preventDefault();
+
+            jQuery("#challengeInfo").modal();
+            jQuery("#challengeInfo .modal-body").hide();
+
+            jQuery.getJSON(
+                jQuery(this).attr("href"),
+                {},
+                function (data) {
+
+                    if (data.error) {
+                        jQuery("#challengeInfo .modal-body").html(jQuery("#error").clone().show());
+                        jQuery("#error p").html("<strong>" + data.error + "</strong>");
+                        return;
+                    }
+
+                    jQuery("#challengeInfo .modal-body > p").html(data.msg);
+
+                }
+            );
+
+        });
+
+        jQuery(".renew").on("click", function(e) {
+            e.preventDefault();
+
+            jQuery("#modal").modal();
+
+            jQuery("#confirmRenew form").attr("action", jQuery(this).attr("href"));
+
+            var domain = jQuery(this).parents("tr").children("td:eq(0)").text();
+            var modalText = jQuery("#confirmRenew").html().replace(/###DOMAIN###/g, domain);
+
+            jQuery("#modal .modal-content").html(modalText);
+        });
+
+        jQuery(".revoke").on("click", function(e) {
+            e.preventDefault();
+
+            jQuery("#modal").modal();
+
+            jQuery("#confirmRevoke form").attr("action", jQuery(this).attr("href"));
+
+            var domain = jQuery(this).parents("tr").children("td:eq(0)").text();
+            var modalText = jQuery("#confirmRevoke").html().replace(/###DOMAIN###/g, domain);
+
+            jQuery("#modal .modal-content").html(modalText);
+        });
+
+        jQuery(".delete").on("click", function(e) {
+            e.preventDefault();
+
+            jQuery("#modal").modal();
+
+            jQuery("#confirmDelete form").attr("action", jQuery(this).attr("href"));
+
+            var domain = jQuery(this).parents("tr").children("td:eq(0)").text();
+            var modalText = jQuery("#confirmDelete").html().replace(/###DOMAIN###/g, domain);
+
+            jQuery("#modal .modal-content").html(modalText);
+        });
+    </script>"
+
+{% endblock %}
