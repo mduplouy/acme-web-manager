@@ -48,7 +48,7 @@
     </table>
 
 
-    <form method="post" action="{{ path('add_domain') }}">
+    <form method="post" action="{{ global.request.basepath }}{{ path('add_domain') }}">
         <div class="form-group col-md-4">
             <input class="form-control" name="domain" type="text">
         </div>
