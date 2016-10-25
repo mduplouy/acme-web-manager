@@ -131,9 +131,11 @@
         </div>
     </div>
 
-    <div id="error" style="display:none;" class="alert alert-dismissible alert-danger">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <p style="margin:4em 0;" class="text-center"></p>
+    <div id="error">
+        <div style="display:none; margin-bottom:0;" class="alert alert-dismissible alert-danger">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <p style="margin:4em 0;" class="text-center"></p>
+        </div>
     </div>
 
 {% endblock %}
@@ -175,13 +177,24 @@
                 {},
                 function (data) {
 
+                    jQuery("#modal").modal();
+                    var modalText;
+
                     if (data.error) {
-                        jQuery("#challengeInfo .modal-body").html(jQuery("#error").clone().show());
-                        jQuery("#error p").html("<strong>" + data.error + "</strong>");
-                        return;
+                    
+                        var $error = jQuery("#error").clone();
+                        $error.children("div")
+                            .show()
+                            .children("p")
+                            .html("<strong>" + data.error + "</strong>");
+
+                        modalText = $error.html();
+                    
+                    } else {
+                        modalText = data.msg;
                     }
 
-                    jQuery("#challengeInfo .modal-body > p").html(data.msg);
+                    jQuery("#modal .modal-content").html(modalText);
 
                 }
             );
