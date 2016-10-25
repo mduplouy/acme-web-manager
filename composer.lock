@@ -706,12 +706,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mduplouy/acmephpc.git",
-                "reference": "6460259dac464e8e67fa34ca5eace0badd9f5bcc"
+                "reference": "e10c05ab777a373d17fb0768761a73a2cc262e48"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mduplouy/acmephpc/zipball/6460259dac464e8e67fa34ca5eace0badd9f5bcc",
-                "reference": "6460259dac464e8e67fa34ca5eace0badd9f5bcc",
+                "url": "https://api.github.com/repos/mduplouy/acmephpc/zipball/e10c05ab777a373d17fb0768761a73a2cc262e48",
+                "reference": "e10c05ab777a373d17fb0768761a73a2cc262e48",
                 "shasum": ""
             },
             "require": {
@@ -754,7 +754,7 @@
             "support": {
                 "source": "https://github.com/mduplouy/acmephpc/tree/pimple-3.x"
             },
-            "time": "2016-10-07 10:57:16"
+            "time": "2016-10-17 13:19:26"
         },
         {
             "name": "phpseclib/phpseclib",
@@ -896,16 +896,16 @@
         },
         {
             "name": "psr/log",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "5277094ed527a1c4477177d102fe4c53551953e0"
+                "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/5277094ed527a1c4477177d102fe4c53551953e0",
-                "reference": "5277094ed527a1c4477177d102fe4c53551953e0",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
+                "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
                 "shasum": ""
             },
             "require": {
@@ -939,7 +939,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-09-19 16:02:08"
+            "time": "2016-10-10 12:19:37"
         },
         {
             "name": "silex/silex",
@@ -1661,12 +1661,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "33dfadb7527d4f08aa8c3be9c44c10534654a210"
+                "reference": "2555dd009cfb03581295d0afa13497b2cb8526a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/33dfadb7527d4f08aa8c3be9c44c10534654a210",
-                "reference": "33dfadb7527d4f08aa8c3be9c44c10534654a210",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/2555dd009cfb03581295d0afa13497b2cb8526a0",
+                "reference": "2555dd009cfb03581295d0afa13497b2cb8526a0",
                 "shasum": ""
             },
             "require": {
@@ -1679,7 +1679,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.26-dev"
+                    "dev-master": "1.27-dev"
                 }
             },
             "autoload": {
@@ -1714,7 +1714,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2016-10-05 19:07:20"
+            "time": "2016-10-24 23:48:00"
         }
     ],
     "packages-dev": [
