@@ -2,9 +2,10 @@
 
 This application is a graphical frontend for [Acme Php Client](https://github.com/octopuce/acmephpc)
 
-## Installation
+It is still under development and MUST NOT be used in production, use at your own risks.
 
-The application is still under development.
+
+## Installation
 
 ### 1. To install, first clone the repository :
 
@@ -23,11 +24,13 @@ The application is still under development.
 
 * Check apache user has write permissions on the following folders :
     * /cache (create it if needed)
-    * /web/assets/
-* Configure web/htaccess.sample and rename it to web/.htaccess
+    * /var   (if you use filesystem storage)
+* Configure web/.htaccess.sample and rename it to web/.htaccess
 
 Do not forget to deny access to all files but the index.php and assets!
 
 ### 6. Configure your web server
 
 Your web server must point to the web/ directory of the app (DocumentRoot directive with Apache HTTP server)
+
+To enable dev env, add an DirectoryIndex to point to the index_dev.php file instead of default index.php
